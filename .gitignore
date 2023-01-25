@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+study-redis-cluster
 
 # Test binary, built with `go test -c`
 *.test
