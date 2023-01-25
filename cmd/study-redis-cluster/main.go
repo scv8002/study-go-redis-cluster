@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"study-redis-cluster/internal/redis_app"
 	"study-redis-cluster/internal/redis_driver"
 	"time"
 
@@ -29,4 +30,7 @@ func main() {
 	log.Print("hello world")
 
 	redis_driver.Start("10.182.58.125:7200, 10.182.58.125:7201")
+
+	// test
+	redis_app.KeyTest()
 }
