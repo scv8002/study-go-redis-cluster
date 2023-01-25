@@ -1,10 +1,12 @@
 package main
 
 import (
+	"os"
+	"study-redis-cluster/internal/redis_driver"
+	"time"
+
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"os"
-	"time"
 )
 
 func init() {
@@ -25,4 +27,6 @@ func init() {
 
 func main() {
 	log.Print("hello world")
+
+	redis_driver.Start("10.182.58.125:7200, 10.182.58.125:7201")
 }
