@@ -17,12 +17,12 @@ func KeyTest() {
 		}
 		log.Debug().Str("key", key).Int("node-id", id).Msg("KeyTest")
 	}
-	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/app.go:17 > KeyTest key=a node-id=4
-	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/app.go:17 > KeyTest key=b node-id=1
-	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/app.go:17 > KeyTest key=c node-id=2
-	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/app.go:17 > KeyTest key=d node-id=3
-	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/app.go:17 > KeyTest key=e node-id=4
-	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/app.go:17 > KeyTest key=f node-id=1
+	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/nodes.go:17 > KeyTest key=a node-id=4
+	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/nodes.go:17 > KeyTest key=b node-id=1
+	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/nodes.go:17 > KeyTest key=c node-id=2
+	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/nodes.go:17 > KeyTest key=d node-id=3
+	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/nodes.go:17 > KeyTest key=e node-id=4
+	//2023-01-25T21:47:04+09:00 DBG internal/redis_app/nodes.go:17 > KeyTest key=f node-id=1
 }
 
 func TestWriteSingle() {
