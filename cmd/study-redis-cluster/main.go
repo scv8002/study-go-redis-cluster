@@ -32,8 +32,10 @@ func main() {
 	redis_driver.Start("10.182.58.125:7200, 10.182.58.125:7201")
 
 	if false {
-		// test
 		redis_app.KeyTest()
+	}
+
+	if false {
 		redis_app.TestWriteSingle()
 		redis_app.TestWriteAll()
 		redis_app.TestWriteSlotNode()
@@ -48,8 +50,16 @@ func main() {
 		redis_app.TestWriteSlotNode2()
 	}
 
-	if true {
+	if false {
 		redis_app.TestCounter()
 	}
 
+	if false {
+		// redis_app.WriteAllKeys() // 실패 : Lua script attempted to access a non local key in a cluster node
+		redis_app.WriteNodeKeys()
+	}
+
+	if true {
+		redis_app.ReadNodeKeys()
+	}
 }

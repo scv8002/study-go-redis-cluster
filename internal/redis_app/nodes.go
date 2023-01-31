@@ -8,7 +8,7 @@ import (
 )
 
 func KeyTest() {
-	keys := []string{"a", "b", "c", "d", "e", "f"}
+	keys := []string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}
 
 	for _, key := range keys {
 		id, err := redis_driver.KeyNode(key)

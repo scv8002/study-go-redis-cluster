@@ -15,6 +15,40 @@ var _writeScript = redis.NewScript(`
 	return 0
 `)
 
+var _writeScript2 = redis.NewScript(`
+	local num_arg = #ARGV/3
+	local key_index = 1
+	local field_index = 1
+	local value_index = 1
+	for i=1, num_arg do
+		key_index = ((i-1)*3) + 1
+		field_index = key_index + 1
+		value_index = field_index + 1
+		redis.call("HSET", ARGV[key_index], ARGV[field_index], ARGV[value_index])
+	end
+
+	return 0
+`)
+
+var _readScript = redis.NewScript(`
+	local num_arg = #ARGV
+
+	local retval = {}
+	for i=1, num_arg do
+		local doc = redis.call("HGETALL", ARGV[i])
+		if #doc > 0 then
+			table.insert(retval, ARGV[i])
+			table.insert(retval, doc)
+		end
+	end
+
+	if #retval == 0 then
+		return -1
+	end
+
+	return retval
+`)
+
 var _counterScript = redis.NewScript(`
 	local doc_path = KEYS[1]
 	local parent_id = ARGV[1]
