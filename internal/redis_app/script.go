@@ -74,3 +74,22 @@ var _counterScript = redis.NewScript(`
 	table.insert(retval, snapshot)
 	return retval
 `)
+
+// result는 []interface{} 로 리턴한다.
+var _testHashesIpair = redis.NewScript(`
+	local key = KEYS[1]
+	local bulk = redis.call("HMGET", key, "$parentId", "$rev")
+	local result = {}
+	for i, v in ipairs(bulk) do
+		if v == nil or v == '' then
+			result[i] = "NOT-FOUND"
+		elseif v == "null" then
+			result[i] = "-(null)-"
+		elseif not v then
+			result[i] = "NOT-VALUE"
+		else
+			result[i] = v 
+		end
+	end
+	return result
+`)

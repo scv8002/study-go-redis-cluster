@@ -2,6 +2,7 @@ package redis_app
 
 import (
 	"context"
+	"fmt"
 	"github.com/rs/zerolog/log"
 	"study-redis-cluster/internal/redis_driver"
 )
@@ -58,6 +59,27 @@ func ReadNodeKeys() {
 				ret[k] = v
 				log.Info().Str("doc-path", path).Str("field", k).Str("value", v).Msg(ltag)
 			}
+		}
+	default:
+		log.Warn().Str("error", "unsupported data type").Msg(ltag)
+	}
+}
+
+func ReadMeta() {
+	ltag := "ReadNodeKeys"
+	vals, err := _testHashesIpair.Run(context.TODO(), redis_driver.Client(), []string{"/129vn12/234"}).Result()
+	if err != nil {
+		log.Warn().Err(err).Msg(ltag)
+		return
+	}
+
+	log.Debug().Interface("test", vals).Msg("ReadMeta")
+	switch val := vals.(type) {
+	case int64:
+		log.Warn().Int64("result", val).Msg(ltag)
+	case []interface{}:
+		for i := 0; i < len(val); i++ {
+			log.Debug().Int("index", i).Str("value", fmt.Sprintf("%v", val[i])).Msg("ReadMeta")
 		}
 	default:
 		log.Warn().Str("error", "unsupported data type").Msg(ltag)

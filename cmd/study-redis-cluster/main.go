@@ -2,12 +2,13 @@ package main
 
 import (
 	"os"
-	"study-redis-cluster/internal/redis_app"
-	"study-redis-cluster/internal/redis_driver"
 	"time"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+
+	"study-redis-cluster/internal/redis_app"
+	"study-redis-cluster/internal/redis_driver"
 )
 
 func init() {
@@ -59,7 +60,24 @@ func main() {
 		redis_app.WriteNodeKeys()
 	}
 
-	if true {
+	if false {
 		redis_app.ReadNodeKeys()
+	}
+
+	if false {
+		redis_app.TestHMGet()
+	}
+
+	if false {
+		redis_app.ReadMeta()
+	}
+
+	if false {
+		//redis_app.TestZScore()
+		redis_app.TestZScoreNotFound()
+	}
+
+	if false {
+		TestTicker()
 	}
 }
