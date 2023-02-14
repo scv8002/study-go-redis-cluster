@@ -77,6 +77,10 @@ func main() {
 		redis_app.TestZScoreNotFound()
 	}
 
+	if true {
+		redis_app.TestZRange()
+	}
+
 	if false {
 		TestTicker()
 	}
