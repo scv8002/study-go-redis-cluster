@@ -149,6 +149,9 @@ func TestHSCANCast() {
 
 var _hashes_not_found_field = redis.NewScript(`
 	local result = redis.call("HGET", KEYS[1], ARGV[1])
+	if result then
+		return -2
+	end
 	if not result then
 		return -1
 	end
@@ -167,6 +170,8 @@ func HGetNotFound() {
 		switch val {
 		case -1: // field 가 없는 경우
 			log.Warn().Str("type", "int64").Int64("val", val).Msg("HGetNotFound")
+		case -2: // field 가 존재하는 경우
+			log.Warn().Str("type", "int64").Int64("val", val).Msg("HGetNotFound")
 		default:
 			log.Warn().Msg("MUST NOT reach here")
 		}
@@ -174,5 +179,42 @@ func HGetNotFound() {
 		log.Warn().Str("type", "string").Str("val", val).Msg("HGetNotFound")
 	default:
 		err = fmt.Errorf("MUST NOT reach here [TestHSCAN:2]")
+	}
+}
+
+var _hash_mget_test = redis.NewScript(`
+	local docFullPath = KEYS[1]
+	local docIndex = tonumber(ARGV[1])
+	local ifMatch = tonumber(ARGV[2])
+	local pattern = ARGV[3]
+
+	return docIndex
+`)
+
+func HMGetTest() {
+	keys := []string{"asdf"}
+	args := []interface{}{"0", 0, "$col:*"}
+	vals, err := _hash_mget_test.Run(context.TODO(), redis_driver.Client(), keys, args).Result()
+
+	if err != nil {
+		log.Warn().Err(err).Msg("HMGetTest")
+		return
+	}
+	switch val := vals.(type) {
+	case int64:
+		switch val {
+		case 0:
+			log.Debug().Str("type", "int64").Int64("val", val).Msg("HMGetTest")
+		case -1: // field 가 없는 경우
+			log.Warn().Str("type", "int64").Int64("val", val).Msg("HMGetTest")
+		case -2: // field 가 존재하는 경우
+			log.Warn().Str("type", "int64").Int64("val", val).Msg("HMGetTest")
+		default:
+			log.Warn().Msg("MUST NOT reach here")
+		}
+	case string: // field가 존재하는 경우
+		log.Warn().Str("type", "string").Str("val", val).Msg("HMGetTest")
+	default:
+		err = fmt.Errorf("MUST NOT reach here [HMGetTest:2]")
 	}
 }
